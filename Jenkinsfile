@@ -4,13 +4,13 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the Java application...'
-                sh '${env.MAVEN_HOME}/bin/mvn clean install'
+                sh "${env.MAVEN_HOME}/bin/mvn clean install"
             }
         }
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh "${env.MAVEN_HOME}/bin/mvn test"
+                sh "${env.MAVEN_HOME}mvn test"
             }
     
         }
