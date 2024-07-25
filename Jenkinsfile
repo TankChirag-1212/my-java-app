@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    stages {
+    stages {    
         stage('Build') {
             steps {
                 echo 'Building the Java application...'
@@ -13,7 +13,7 @@ pipeline {
                 sh "${env.MAVEN_HOME}/bin/mvn test"
             }
     
-    }
+        }
     post {
         success {
             echo 'Build and test succeeded!'
@@ -21,5 +21,6 @@ pipeline {
         failure {
             echo 'Build or test failed!'
         }
+    }
     }
 }
