@@ -1,10 +1,15 @@
 pipeline {
     agent any
-    stages {
+
+    tools {
+        maven 'Maven_3.9.0' // Ensure this matches your Maven tool name
+    }
+
+    stages {    
         stage('Build') {
             steps {
                 echo 'Building the Java application...'
-                sh '${env.MAVEN_HOME}/bin/mvn clean install'
+                sh "${env.MAVEN_HOME}/bin/mvn clean install"
             }
         }
         stage('Test') {
@@ -13,6 +18,7 @@ pipeline {
                 sh "${env.MAVEN_HOME}/bin/mvn test"
             }
     
+        }
     }
     post {
         success {
