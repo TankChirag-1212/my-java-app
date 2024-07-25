@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+
     tools {
         maven 'Maven_3.9.0' // Ensure this matches your Maven tool name
     }
@@ -15,7 +15,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh "${env.MAVEN_HOME}mvn test"
+                sh "${env.MAVEN_HOME}/bin/mvn test"
             }
     
         }
