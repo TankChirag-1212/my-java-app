@@ -14,6 +14,7 @@ pipeline {
             }
     
         }
+    }
     post {
         success {
             echo 'Build and test succeeded!'
@@ -21,6 +22,5 @@ pipeline {
         failure {
             echo 'Build or test failed!'
         }
-    }
     }
 }
