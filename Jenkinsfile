@@ -16,7 +16,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build("${env.REPO_NAME}")
+                    dockerImage = docker.build("${env.REPO_NAME}:java-app")
                 }
             }
         }
@@ -26,7 +26,7 @@ pipeline {
                 script {
                     docker.withRegistry('DOCKERHUB_CREDENTIALS') {
                         // dockerImage.push("${env.BUILD_NUMBER}")
-                        dockerImage.push('latest')
+                        dockerImage.push("${env.REPO_NAME}:java-app")
                     }
                 }
             }
