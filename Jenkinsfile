@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('d784ec34-84a6-4363-8d99-5ac8be4a8df8	')
+        DOCKERHUB_CREDENTIALS = 'd784ec34-84a6-4363-8d99-5ac8be4a8df8'
         REPO_NAME = 'chirag1212/my_repo'
     }
 
@@ -24,7 +24,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry([usernamePassword(credentialsId: ${DOCKERHUB_CREDENTIALS}, passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                    docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
                         // dockerImage.push("${env.BUILD_NUMBER}")
                         dockerImage.push("${env.REPO_NAME}:java-app")
                     }
