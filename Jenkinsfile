@@ -1,25 +1,49 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven_3.9.0' // Ensure this matches your Maven tool name
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('d784ec34-84a6-4363-8d99-5ac8be4a8df8	')
+        REPO_NAME = 'chirag1212/my_repo'
     }
 
-    stages {    
-        stage('Build') {
+    stages {
+        stage('Clone Repository') {
             steps {
-                echo 'Building the Java application...'
-                sh "${env.MAVEN_HOME}/bin/mvn clean install"
+                git 'https://github.com/TankChirag-1212/jenkins-sample-java.git'
             }
         }
-        stage('Test') {
+
+        stage('Build Docker Image') {
             steps {
-                echo 'Running tests...'
-                sh "${env.MAVEN_HOME}/bin/mvn test"
+                script {
+                    dockerImage = docker.build("${env.REPO_NAME}")
+                }
             }
-    
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry('DOCKERHUB_CREDENTIALS') {
+                        // dockerImage.push("${env.BUILD_NUMBER}")
+                        dockerImage.push('latest')
+                    }
+                }
+            }
+        }
+
+        stage('Deploy Container') {
+            steps {
+                script {
+                    sh """
+                    docker run -d --name java-container \
+                    ${env.REPO_NAME}:latest
+                    """
+                }
+            }
         }
     }
+
     post {
         success {
             echo 'Build and test succeeded!'
