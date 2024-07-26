@@ -47,6 +47,11 @@ pipeline {
     post {
         success {
             echo 'Build and test succeeded!'
+            script{
+                sh """
+                docker rm --force java-container
+                """
+            }
         }
         failure {
             echo 'Build or test failed!'
