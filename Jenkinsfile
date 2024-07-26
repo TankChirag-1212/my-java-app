@@ -26,7 +26,7 @@ pipeline {
                 script {
                     docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
                         // dockerImage.push("${env.BUILD_NUMBER}")
-                        dockerImage.push(":java-app")
+                        dockerImage.push()
                     }
                 }
             }
