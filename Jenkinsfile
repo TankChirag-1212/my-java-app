@@ -24,7 +24,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry("${DOCKERHUB_CREDENTIALS}") {
+                    docker.withRegistry([usernamePassword(credentialsId: ${DOCKERHUB_CREDENTIALS}, passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                         // dockerImage.push("${env.BUILD_NUMBER}")
                         dockerImage.push("${env.REPO_NAME}:java-app")
                     }
